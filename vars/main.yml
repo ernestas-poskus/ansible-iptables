@@ -1,0 +1,4 @@
+---
+# vars file for ansible-iptables
+
+iptables_ansible_internal_hosts_interface: "ansible_{{ iptables_internal_hosts_interface }}"

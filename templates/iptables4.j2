@@ -1,0 +1,87 @@
+# {{ansible_managed}}
+*filter
+:INPUT {{iptables_initial_input_action}} [0:0]
+:FORWARD {{iptables_initial_forward_action}} [0:0]
+:OUTPUT {{iptables_initial_output_action}} [0:0]
+
+{% if iptables_allow_loopback %}
+# Accept traffic from loopback interface (localhost)
+-A INPUT -i lo -j ACCEPT
+-A INPUT -s 0.0.0.0 -j ACCEPT
+{% endif %}
+
+{% if iptables_allow_established_connections %}
+# Allow established connections
+-A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
+{% endif %}
+
+{% if iptables_allow_dns %}
+# DNS
+-A OUTPUT -p tcp --dport 53 -j ACCEPT
+-A OUTPUT -p udp --dport 53 -j ACCEPT
+-A INPUT -p tcp --dport 53 -j ACCEPT
+-A INPUT -p udp --dport 53 -j ACCEPT
+{% endif %}
+
+{% if iptables_allow_ntp %}
+# NTP allow traffic for time synchronization
+-A OUTPUT -p udp --dport 123 -j ACCEPT
+-A INPUT -p udp --sport 123 -j ACCEPT
+{% endif %}
+
+{% if iptables_allow_icmp %}
+# ICMP accept ping requests
+-A INPUT -p icmp -j ACCEPT
+-A OUTPUT -p icmp -j ACCEPT
+{% endif %}
+
+{% if iptables_internal_network | length > 0 %}
+# ######################################
+# Internal network configuration
+# ######################################
+{% for internal_ip_or_host in iptables_internal_network %}
+{% for internal_port in iptables_internal_ports %}
+{% for internal_protocol in iptables_internal_protocols %}
+{% if iptables_internal_ips_from_hosts %}
+{% if internal_ip_or_host != inventory_hostname and
+  (hostvars[internal_ip_or_host] is defined and hostvars[internal_ip_or_host][iptables_ansible_internal_hosts_interface] is defined) %}
+# {{internal_ip_or_host}}
+-A INPUT -s {{hostvars[internal_ip_or_host][iptables_ansible_internal_hosts_interface][iptables_internal_hosts_ip_protocol]['address']}} -p {{internal_protocol}} --dport {{ internal_port }} -j ACCEPT
+{% endif %}
+{% else %}
+-A INPUT -s {{internal_ip_or_host}} -p {{internal_protocol}} --dport {{ internal_port }} -j ACCEPT
+{% endif %}
+{% endfor %}
+{% endfor %}
+{% endfor %}
+#######################################
+{% endif %}
+
+{% if iptables_external_ports | length > 0 %}
+# ######################################
+# External network configuration
+# ######################################
+{% for external_port in iptables_external_ports %}
+{% for external_protocol in iptables_external_protocols %}
+-A INPUT -p {{external_protocol}} --dport {{ external_port }} -j ACCEPT
+{% endfor %}
+{% endfor %}
+# ######################################
+{% endif %}
+
+{% if iptables_additional_rules | length > 0 %}
+# Additional custom rules
+{% for rule in iptables_additional_rules %}
+{{ rule }}
+{% endfor %}
+{% endif %}
+
+{% if iptables_log_dropped_packets %}
+# Log other incoming requests (all of which are dropped) at 15/minute max
+-N LOGGING
+-A INPUT -j LOGGING
+-A LOGGING -m limit --limit {{iptables_log_dropped_limit}}/min -j LOG --log-prefix "IPTables-Dropped: " --log-level {{iptables_logging_level}}
+-A LOGGING -j DROP
+{% endif %}
+
+COMMIT
