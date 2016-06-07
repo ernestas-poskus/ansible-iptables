@@ -1,0 +1,34 @@
+- name: Ensure iptables is installed
+  apt: pkg=iptables state=installed
+
+- name: Ensure iptables-persistent is installed
+  apt: pkg=iptables-persistent state=installed
+
+- name: Enable iptables
+  service: name=iptables state=started enabled=yes
+
+- name: Create the iptables for IPv4
+  template: >
+      src=iptables4.j2
+      dest=/etc/iptables/rules.v4
+      owner=root
+      group=root
+      mode=0600
+      backup=yes
+  notify: restart iptables
+
+# - name: Create the iptables for IPv6
+#   template: >
+#       src=iptables6.j2
+#       dest=/etc/iptables/rules.v6
+#       owner=root
+#       group=root
+#       mode=0600
+#       backup=yes
+#
+#   notify: restart ip6tables
+#   when: "'scope' in ansible_default_ipv6 and ansible_default_ipv6.scope == 'global'"
+#
+# - name: enable and start ip6tables service
+#   service: name=ip6tables state=started enabled=yes
+#   when: "'scope' in ansible_default_ipv6 and ansible_default_ipv6.scope == 'global'"

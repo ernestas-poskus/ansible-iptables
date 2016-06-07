@@ -1,0 +1,9 @@
+---
+# tasks file for ansible-iptables
+- name: iptables configuring Redhat
+  include: redhat.yml
+  when: ansible_distribution in [ 'RedHat', 'CentOS' ]
+
+- name: iptables configuring Debian
+  include: debian.yml
+  when: ansible_distribution in [ 'Debian', 'Ubuntu' ]

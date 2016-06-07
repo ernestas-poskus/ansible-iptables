@@ -1,0 +1,82 @@
+---
+# defaults file for ansible-iptables
+
+# Default action for: :INPUT DROP
+iptables_initial_input_action: DROP
+
+# Default action for: :FORWARD ACCEPT
+iptables_initial_forward_action: ACCEPT
+
+# Default action for: :OUTPUT ACCEPT
+iptables_initial_output_action: ACCEPT
+
+# Remove all rules and chains form iptables
+iptables_remove_rules: true
+
+# Allow loopback interface (localhost)
+iptables_allow_loopback: true
+
+# Allow established and related connections
+iptables_allow_established_connections: true
+
+# Allow DNS resolution
+iptables_allow_dns: false
+
+# Allow NTP traffic for time synchronization
+iptables_allow_ntp: true
+
+# Allow ICMP ping requests
+iptables_allow_icmp: true
+
+# Internal network supports list:
+# - IP's
+# - HOSTS (iptables_internal_ips_from_hosts should be enabled)
+iptables_internal_network: []
+
+# Internal resolve IP from given host
+iptables_internal_ips_from_hosts: true
+
+# Internal hosts interface
+iptables_internal_hosts_interface: "{{ ansible_default_ipv4.interface }}"
+
+# Internal hosts IP protocol: ipv4 / ipv6
+iptables_internal_hosts_ip_protocol: 'ipv4'
+
+##########################
+# Internal network configuration
+##########################
+iptables_internal_ports:
+  - '1024:65535'
+  - '111' # Portmapper
+  - '161:162' # Simple network management protocol (SNMP).
+  - '22' # ssh
+
+# Internal network protocols
+iptables_internal_protocols:
+  - 'tcp'
+  - 'udp'
+
+##########################
+# External network configuration
+##########################
+iptables_external_ports:
+  - '22' # ssh
+
+# External network protocols
+iptables_external_protocols:
+  - 'tcp'
+
+# Additional rules for iptables
+iptables_additional_rules: []
+
+# Log dropped packets
+iptables_log_dropped_packets: false
+
+# Log limit of dropped packets in minutes
+iptables_log_dropped_limit: 15
+
+# Drop all other traffic
+iptables_drop_all_other_traffic: true
+
+# LOGGING log level of dropped packets
+iptables_logging_level: 4
