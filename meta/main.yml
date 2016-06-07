@@ -1,0 +1,27 @@
+galaxy_info:
+  author: Ernestas Poskus
+  description: iptables management role for configuring internal & external networks
+  company: Linkosmos
+  license: BSDv3
+  min_ansible_version: 2.0
+  platforms:
+    - name: EL
+      versions:
+        - 6
+        - 7
+    - name: Fedora
+      versions:
+        - all
+    - name: Ubuntu
+      versions:
+        - all
+    - name: Debian
+      versions:
+        - all
+
+  galaxy_tags:
+    - iptables
+    - network
+    - firewall
+
+dependencies: []
