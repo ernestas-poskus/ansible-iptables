@@ -75,8 +75,5 @@ iptables_log_dropped_packets: false
 # Log limit of dropped packets in minutes
 iptables_log_dropped_limit: 15
 
-# Drop all other traffic
-iptables_drop_all_other_traffic: true
-
 # LOGGING log level of dropped packets
-iptables_logging_level: 4
+iptables_log_logging_level: 4

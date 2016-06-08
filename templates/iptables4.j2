@@ -80,7 +80,7 @@
 # Log other incoming requests (all of which are dropped) at 15/minute max
 -N LOGGING
 -A INPUT -j LOGGING
--A LOGGING -m limit --limit {{iptables_log_dropped_limit}}/min -j LOG --log-prefix "IPTables-Dropped: " --log-level {{iptables_logging_level}}
+-A LOGGING -m limit --limit {{iptables_log_dropped_limit}}/min -j LOG --log-prefix "IPTables-Dropped: " --log-level {{iptables_log_logging_level}}
 -A LOGGING -j DROP
 {% endif %}
 
