@@ -34,7 +34,7 @@ iptables_allow_icmp: true
 iptables_internal_network: []
 
 # Internal resolve IP from given host
-iptables_internal_ips_from_hosts: true
+iptables_internal_ips_from_hosts: false
 
 # Internal hosts interface
 iptables_internal_hosts_interface: "{{ ansible_default_ipv4.interface }}"
