@@ -4,8 +4,9 @@
 - name: Ensure iptables-persistent is installed
   apt: pkg=iptables-persistent state=installed
 
-- name: Enable iptables
-  service: name=iptables state=started enabled=yes
+- name: Flush iptables
+  command: iptables -F
+  when: iptables_remove_rules
 
 - name: Create the iptables for IPv4
   template: >
@@ -16,6 +17,9 @@
       mode=0600
       backup=yes
   notify: restart iptables
+
+- name: Enable iptables
+  service: name=ufw state=started enabled=yes
 
 # - name: Create the iptables for IPv6
 #   template: >

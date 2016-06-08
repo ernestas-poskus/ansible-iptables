@@ -15,7 +15,7 @@
   when: ansible_distribution_major_version|int >= 7
 
 - name: Flush iptables
-  yum: name=iptables-services state=installed
+  command: iptables -F
   when: iptables_remove_rules
 
 - name: Create the iptables for IPv4
