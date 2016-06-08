@@ -2,6 +2,11 @@ ansible-iptables for internal & external network firewall configuration
 =========
 
 [![Build Status](https://travis-ci.org/ernestas-poskus/ansible-iptables.svg?branch=master)](https://travis-ci.org/ernestas-poskus/ansible-iptables)
+[![RHEL](http://img.shields.io/badge/supports-RHEL-green.svg)](https://en.wikipedia.org/wiki/Red_Hat_Enterprise_Linux)
+[![Fedora](http://img.shields.io/badge/supports-Fedora-green.svg)](https://en.wikipedia.org/wiki/Fedora_(operating_system))
+[![Ubuntu](http://img.shields.io/badge/supports-Ubuntu-green.svg)](https://en.wikipedia.org/wiki/Ubuntu_(operating_system))
+[![Debian](http://img.shields.io/badge/supports-Debian-green.svg)](https://en.wikipedia.org/wiki/Debian)
+[![BSD License](http://img.shields.io/badge/license-BSD-blue.svg)](http://opensource.org/licenses/BSD-3-Clause)
 
 Installation
 ------------
