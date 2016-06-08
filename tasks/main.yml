@@ -1,5 +1,8 @@
 ---
 # tasks file for ansible-iptables
+- name: Include OS-specific variables.
+  include_vars: "{{ ansible_distribution }}.yml"
+
 - name: iptables configuring Redhat
   include: redhat.yml
   when: ansible_distribution in [ 'RedHat', 'CentOS' ]
@@ -7,3 +10,16 @@
 - name: iptables configuring Debian
   include: debian.yml
   when: ansible_distribution in [ 'Debian', 'Ubuntu' ]
+
+- name: Create the iptables for IPv4
+  template: >
+      src=iptables4.j2
+      dest='{{iptables_ipv4_path}}'
+      owner=root
+      group=root
+      mode=0600
+      backup=yes
+  notify: restart iptables
+
+- name: Enable iptables
+  service: name='{{iptables_service_name}}' state=started enabled=yes

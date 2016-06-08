@@ -34,9 +34,6 @@ iptables_initial_forward_action: ACCEPT
 # Default action for: :OUTPUT ACCEPT
 iptables_initial_output_action: ACCEPT
 
-# Remove all rules and chains form iptables
-iptables_remove_rules: true
-
 # Allow loopback interface (localhost)
 iptables_allow_loopback: true
 

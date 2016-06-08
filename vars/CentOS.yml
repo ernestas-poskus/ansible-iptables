@@ -1,0 +1,5 @@
+---
+# vars file for CentOS
+iptables_service_name: iptables
+
+iptables_ipv4_path: /etc/sysconfig/iptables
