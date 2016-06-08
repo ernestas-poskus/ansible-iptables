@@ -1,35 +1,14 @@
 ---
-- name: Stop systemctl firewalld
-  command: systemctl stop firewalld.service
-  when: ansible_distribution_major_version|int >= 7
-
-- name: Disable systemctl firewalld
-  command: systemctl disable firewalld.service
+- name: Stop systemctl firewalld and disable
+  service: name=firewalld.service state=stopped enabled=no
   when: ansible_distribution_major_version|int >= 7
 
 - name: Install iptables
-  yum: name=iptables state=installed
+  yum: name='{{iptables_service_name}}' state=installed
 
 - name: Install iptables related packages
   yum: name=iptables-services state=installed
   when: ansible_distribution_major_version|int >= 7
-
-- name: Flush iptables
-  command: iptables -F
-  when: iptables_remove_rules
-
-- name: Create the iptables for IPv4
-  template: >
-      src=iptables4.j2
-      dest=/etc/sysconfig/iptables
-      owner=root
-      group=root
-      mode=0600
-      backup=yes
-  notify: restart iptables
-
-- name: Enable and start iptables
-  service: name=iptables state=started enabled=yes
 
 # - name: Create the iptables for IPv6
 #   template: >

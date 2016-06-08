@@ -1,0 +1,5 @@
+---
+# vars file for Ubuntu
+iptables_service_name: ufw
+
+iptables_ipv4_path: /etc/iptables/rules.v4
