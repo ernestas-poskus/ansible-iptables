@@ -21,5 +21,18 @@
       backup=yes
   notify: restart iptables
 
-- name: Enable iptables
+- name: Enable iptables for IPv4
   service: name='{{iptables_service_name}}' state=started enabled=yes
+
+- name: Create the iptables for IPv6
+  template: >
+      src=iptables6.j2
+      dest='{{iptables_ipv6_path}}'
+      owner=root
+      group=root
+      mode=0600
+      backup=yes
+  notify: restart iptables6
+
+- name: Enable iptables for IPv6
+  service: name='{{iptables6_service_name}}' state=started enabled=yes

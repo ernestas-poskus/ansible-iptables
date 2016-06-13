@@ -9,18 +9,3 @@
 - name: Install iptables related packages
   yum: name=iptables-services state=installed
   when: ansible_distribution_major_version|int >= 7
-
-# - name: Create the iptables for IPv6
-#   template: >
-#       src=iptables6.j2
-#       dest=/etc/sysconfig/ip6tables
-#       owner=root
-#       group=root
-#       mode=0600
-#       backup=yes
-#   notify: restart ip6tables
-#   when: "'scope' in ansible_default_ipv6 and ansible_default_ipv6.scope == 'global'"
-#
-# - name: enable and start ip6tables service
-#   service: name=ip6tables state=started enabled=yes
-#   when: "'scope' in ansible_default_ipv6 and ansible_default_ipv6.scope == 'global'"

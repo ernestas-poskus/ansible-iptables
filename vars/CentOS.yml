@@ -1,5 +1,7 @@
 ---
 # vars file for CentOS
 iptables_service_name: iptables
+iptables6_service_name: ip6tables
 
 iptables_ipv4_path: /etc/sysconfig/iptables
+iptables_ipv6_path: /etc/sysconfig/ip6tables
