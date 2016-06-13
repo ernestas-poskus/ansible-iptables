@@ -1,5 +1,7 @@
 ---
 # vars file for Ubuntu
-iptables_service_name: ufw
+iptables_service_name: iptables-persistent
+iptables6_service_name: '{{iptables_service_name}}'
 
 iptables_ipv4_path: /etc/iptables/rules.v4
+iptables_ipv6_path: /etc/iptables/rules.v6

@@ -30,6 +30,10 @@ Role Variables
 --------------
 
 ```yaml
+##########################
+# IPv4 config
+##########################
+
 # Default action for: :INPUT DROP
 iptables_initial_input_action: DROP
 
@@ -65,12 +69,7 @@ iptables_internal_ips_from_hosts: false
 # Internal hosts interface
 iptables_internal_hosts_interface: "{{ ansible_default_ipv4.interface }}"
 
-# Internal hosts IP protocol: ipv4 / ipv6
-iptables_internal_hosts_ip_protocol: 'ipv4'
-
-##########################
 # Internal network configuration
-##########################
 iptables_internal_ports:
   - '1024:65535'
   - '111' # Portmapper
@@ -82,9 +81,7 @@ iptables_internal_protocols:
   - 'tcp'
   - 'udp'
 
-##########################
 # External network configuration
-##########################
 iptables_external_ports:
   - '22' # ssh
 
@@ -103,6 +100,77 @@ iptables_log_dropped_limit: 15
 
 # LOGGING log level of dropped packets
 iptables_log_logging_level: 4
+
+##########################
+# IPv6 config
+##########################
+
+# Default action for: :INPUT DROP
+iptables6_initial_input_action: DROP
+
+# Default action for: :FORWARD ACCEPT
+iptables6_initial_forward_action: ACCEPT
+
+# Default action for: :OUTPUT ACCEPT
+iptables6_initial_output_action: ACCEPT
+
+# Allow loopback interface (localhost)
+iptables6_allow_loopback: true
+
+# Allow established and related connections
+iptables6_allow_established_connections: true
+
+# Allow DNS resolution
+iptables6_allow_dns: false
+
+# Allow NTP traffic for time synchronization
+iptables6_allow_ntp: true
+
+# Allow ICMP ping requests
+iptables6_allow_icmp: true
+
+# Internal network supports list:
+# - IP's
+# - HOSTS (iptables6_internal_ips_from_hosts should be enabled)
+iptables6_internal_network: []
+
+# Internal resolve IP from given host
+iptables6_internal_ips_from_hosts: false
+
+# Internal hosts interface
+iptables6_internal_hosts_interface: "{{ ansible_default_ipv4.interface }}"
+
+# Internal network configuration
+iptables6_internal_ports:
+  - '1024:65535'
+  - '111' # Portmapper
+  - '161:162' # Simple network management protocol (SNMP).
+  - '22' # ssh
+
+# Internal network protocols
+iptables6_internal_protocols:
+  - 'tcp'
+  - 'udp'
+
+# External network configuration
+iptables6_external_ports:
+  - '22' # ssh
+
+# External network protocols
+iptables6_external_protocols:
+  - 'tcp'
+
+# Additional rules for iptables
+iptables6_additional_rules: []
+
+# Log dropped packets
+iptables6_log_dropped_packets: false
+
+# Log limit of dropped packets in minutes
+iptables6_log_dropped_limit: 15
+
+# LOGGING log level of dropped packets
+iptables6_log_logging_level: 4
 ```
 
 Example Playbook
