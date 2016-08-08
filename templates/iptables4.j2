@@ -31,8 +31,8 @@
 
 {% if iptables_allow_icmp %}
 # ICMP accept ping requests
--A INPUT -p icmp -j ACCEPT
--A OUTPUT -p icmp -j ACCEPT
+# https://blog.securityevaluators.com/icmp-the-good-the-bad-and-the-ugly-130413e56030
+-A OUTPUT -p icmp --icmp-type echo-reply -j ACCEPT
 {% endif %}
 
 {% if iptables_internal_network | length > 0 %}
