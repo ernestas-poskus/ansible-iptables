@@ -1,4 +1,18 @@
 # {{ansible_managed}}
+
+*nat
+:PREROUTING {{iptables_nat_prerouting}} [0:0]
+:INPUT {{iptables_nat_input}} [0:0]
+:OUTPUT {{iptables_nat_output}} [0:0]
+:POSTROUTING {{iptables_nat_postrouting}} [0:0]
+{% if iptables6_nat_additional_rules | length > 0 %}
+# Additional custom NAT rules
+{% for rule in iptables6_nat_additional_rules %}
+{{ rule }}
+{% endfor %}
+{% endif %}
+COMMIT
+
 *filter
 :INPUT {{iptables6_initial_input_action}} [0:0]
 :FORWARD {{iptables6_initial_forward_action}} [0:0]
