@@ -30,6 +30,9 @@ Role Variables
 --------------
 
 ```yaml
+---
+# defaults file for ansible-iptables
+
 ##########################
 # IPv4 config
 ##########################
@@ -171,6 +174,16 @@ iptables6_log_dropped_limit: 15
 
 # LOGGING log level of dropped packets
 iptables6_log_logging_level: 4
+
+# NAT
+iptables_nat_prerouting: ACCEPT
+iptables_nat_input: ACCEPT
+iptables_nat_output: ACCEPT
+iptables_nat_postrouting: ACCEPT
+
+iptables4_nat_additional_rules: []
+
+iptables6_nat_additional_rules: []
 ```
 
 Example Playbook
