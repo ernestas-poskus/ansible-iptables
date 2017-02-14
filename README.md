@@ -177,7 +177,6 @@ iptables6_log_logging_level: 4
 
 # NAT
 iptables_nat_prerouting: ACCEPT
-iptables_nat_input: ACCEPT
 iptables_nat_output: ACCEPT
 iptables_nat_postrouting: ACCEPT
 
