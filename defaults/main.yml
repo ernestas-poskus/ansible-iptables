@@ -76,6 +76,9 @@ iptables_log_logging_level: 4
 # IPv6 config
 ##########################
 
+# Whether to enable IPv6 support
+ip6_enabled: true
+
 # Default action for: :INPUT DROP
 iptables6_initial_input_action: DROP
 
